@@ -1,0 +1,64 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class textcontroller : MonoBehaviour
+{
+    public Text objText;
+    int intRandomNumber;
+    int intGuessedNumber;
+
+    
+    
+    // Start is called before the first frame update
+    void Start()
+    {
+        InitializeGame();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            InitializeGame();
+        }
+
+        // Detect that a keystroke was pressed
+        if (Input.anyKeyDown)
+        {
+            // Test to see if the keystroke was a number
+            if (int.TryParse(Input.inputString, out intGuessedNumber))
+            {
+                if (intRandomNumber > intGuessedNumber)
+                {
+                    objText.text =
+                        string.Format("You guessed {0}. You are too low"
+                        , intGuessedNumber);
+                }
+
+                if (intRandomNumber < intGuessedNumber)
+                {
+                    objText.text =
+                        string.Format("You guessed {0}. You are too high"
+                        , intGuessedNumber);
+                }
+
+                if (intRandomNumber == intGuessedNumber)
+                {
+                    objText.text =
+                        string.Format("You guessed {0}. You are correct! (press spacebar to continue)"
+                        , intGuessedNumber);
+                }
+            }
+        }
+    }
+
+    private void InitializeGame()
+    {
+        intRandomNumber = Random.Range(1, 10);
+
+        objText.text = "guess a number between 1 and 10";
+    }
+}
